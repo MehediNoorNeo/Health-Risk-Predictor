@@ -13,7 +13,8 @@ PROJECT_DIR = Path(__file__).resolve().parent.parent
 
 DATA_PATH = PROJECT_DIR / "data" / "novagen_dataset.csv"
 MODEL_PATH = PROJECT_DIR / "models" / "stacking_pipeline.pkl"
-
+# Health icon
+ICON_PATH = BASE_DIR / "figures" / "public_health_icon.png"
 
 # ============================================================
 # PAGE CONFIG
@@ -21,7 +22,7 @@ MODEL_PATH = PROJECT_DIR / "models" / "stacking_pipeline.pkl"
 
 st.set_page_config(
     page_title="HealthRisk Predictor",
-    page_icon="../figures/public_health_icon.png",
+    page_icon=str(ICON_PATH),
     layout="wide",
     initial_sidebar_state="expanded",
 )
