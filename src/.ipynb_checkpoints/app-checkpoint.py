@@ -11,6 +11,7 @@ import streamlit as st
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = Path(__file__).resolve().parent.parent
+STYLE_PATH = Path(__file__).resolve().parent / "styles" / "style.css"
 
 DATA_PATH = PROJECT_DIR / "data" / "novagen_dataset.csv"
 MODEL_PATH = PROJECT_DIR / "models" / "stacking_pipeline.pkl"
@@ -33,436 +34,45 @@ st.set_page_config(
 # CUSTOM CSS
 # ============================================================
 
-st.markdown(
-    """
-    <style>
+# ============================================================
+# CUSTOM CSS
+# ============================================================
 
-      /* ==========================================================
-         COLOR PALETTE
-         ========================================================== */
+def load_css():
+    with open(STYLE_PATH, "r", encoding="utf-8") as f:
+        st.markdown(
+            f"<style>{f.read()}</style>",
+            unsafe_allow_html=True,
+        )
 
-      :root {
-          --cerulean: #1C6E8C;
-          --cerulean-dark: #1E6986;
-          --blue-slate: #1F637F;
-          --blue-slate-dark: #225871;
 
-          --bg-main: #F1F7F9;
-          --bg-surface: #F8FCFD;
-          --bg-soft: #EAF3F6;
-          --bg-soft-blue: #E3EFF3;
+load_css()
 
-          --border: #B9D3DC;
-          --border-dark: #8FB6C3;
 
-          --text-dark: #173746;
-          --text-main: #244957;
-          --text-muted: #66818D;
 
-          --success: #16805C;
-          --success-bg: #E8F6F0;
 
-          --danger: #C73E4D;
-          --danger-bg: #FCECEE;
+# ============================================================
+# HTML TEMPLATE HELPERS
+# ============================================================
 
-          --warning: #B77716;
-          --warning-bg: #FFF5DF;
-      }
+TEMPLATE_DIR = Path(__file__).resolve().parent / "templates"
 
 
-      /* ==========================================================
-         MAIN APPLICATION BACKGROUND
-         ========================================================== */
+def load_html_template(filename, replacements=None):
+    template_path = TEMPLATE_DIR / filename
 
-      .stApp {
-          background:
-              radial-gradient(
-                  circle at 0% 0%,
-                  rgba(28, 110, 140, 0.10),
-                  transparent 30%
-              ),
-              radial-gradient(
-                  circle at 100% 0%,
-                  rgba(31, 99, 127, 0.08),
-                  transparent 28%
-              ),
-              linear-gradient(
-                  135deg,
-                  #F1F7F9 0%,
-                  #F5FAFB 50%,
-                  #EAF3F6 100%
-              );
+    if not template_path.exists():
+        raise FileNotFoundError(
+            f"HTML template was not found:\n{template_path}"
+        )
 
-          color: var(--text-dark);
-      }
+    html = template_path.read_text(encoding="utf-8")
 
+    if replacements:
+        for key, value in replacements.items():
+            html = html.replace("{{" + key + "}}", str(value))
 
-      /* ==========================================================
-         MAIN CONTENT CONTAINER
-         ========================================================== */
-
-      .main .block-container {
-          background: rgba(248, 252, 253, 0.72);
-          border-radius: 22px;
-
-          padding-top: 1.7rem;
-          padding-bottom: 3rem;
-      }
-
-
-      /* ==========================================================
-         STREAMLIT TOP BAR
-         ========================================================== */
-
-      header[data-testid="stHeader"] {
-          background: linear-gradient(
-              90deg,
-              #225871 0%,
-              #1F637F 50%,
-              #1C6E8C 100%
-          );
-
-          box-shadow: 0 2px 12px rgba(34, 88, 113, 0.18);
-      }
-
-      header[data-testid="stHeader"] button {
-          color: white !important;
-      }
-
-
-      /* ==========================================================
-         SIDEBAR
-         ========================================================== */
-
-      [data-testid="stSidebar"] {
-          background: linear-gradient(
-              180deg,
-              #225871 0%,
-              #1F637F 55%,
-              #1E6986 100%
-          );
-
-          border-right: 1px solid rgba(255, 255, 255, 0.12);
-      }
-
-      [data-testid="stSidebar"] * {
-          color: #EAF3F6;
-      }
-
-      [data-testid="stSidebar"] hr {
-          border-color: rgba(255, 255, 255, 0.18) !important;
-      }
-
-
-      /* ==========================================================
-         SECTION LABELS
-         ========================================================== */
-
-      .section-label {
-          color: var(--cerulean);
-          font-size: .76rem;
-          font-weight: 800;
-
-          letter-spacing: .12em;
-          text-transform: uppercase;
-
-          margin: .4rem 0;
-      }
-
-
-      /* ==========================================================
-         HEADINGS / NORMAL TEXT
-         ========================================================== */
-
-      h1, h2, h3, h4, h5, h6 {
-          color: var(--text-dark);
-      }
-
-      p, label {
-          color: var(--text-main);
-      }
-
-      [data-testid="stCaptionContainer"] {
-          color: var(--text-muted) !important;
-      }
-
-
-    /* ==========================================================
-       BUTTONS
-       ========================================================== */
-    
-    .stButton > button,
-    .stFormSubmitButton > button,
-    [data-testid="stFormSubmitButton"] button {
-    
-        background: linear-gradient(
-            135deg,
-            #1E6986 0%,
-            #1C6E8C 100%
-        ) !important;
-    
-        color: #FFFFFF !important;
-    
-        border: none !important;
-        border-radius: 10px !important;
-    
-        font-weight: 800 !important;
-    
-        padding: .65rem 1rem !important;
-    
-        width: 100% !important;
-    
-        box-shadow:
-            0 7px 18px rgba(28, 110, 140, 0.20);
-    
-        transition:
-            transform .15s ease,
-            box-shadow .15s ease,
-            background .15s ease;
-    }
-    
-    
-    /* Force button text to white */
-    
-    .stButton > button *,
-    .stFormSubmitButton > button *,
-    [data-testid="stFormSubmitButton"] button * {
-    
-        color: #FFFFFF !important;
-        fill: #FFFFFF !important;
-        -webkit-text-fill-color: #FFFFFF !important;
-    }
-    
-    
-    /* Hover */
-    
-    .stButton > button:hover,
-    .stFormSubmitButton > button:hover,
-    [data-testid="stFormSubmitButton"] button:hover {
-    
-        background: linear-gradient(
-            135deg,
-            #1C6E8C 0%,
-            #225871 100%
-        ) !important;
-    
-        color: #FFFFFF !important;
-    
-        transform: translateY(-1px);
-    
-        box-shadow:
-            0 10px 22px rgba(28, 110, 140, 0.27);
-    }
-    
-    
-    /* Keep text white on hover too */
-    
-    .stButton > button:hover *,
-    .stFormSubmitButton > button:hover *,
-    [data-testid="stFormSubmitButton"] button:hover * {
-    
-        color: #FFFFFF !important;
-        fill: #FFFFFF !important;
-        -webkit-text-fill-color: #FFFFFF !important;
-    }
-
-
-      /* ==========================================================
-         INPUT FIELDS
-         ========================================================== */
-
-      div[data-baseweb="input"],
-      div[data-baseweb="select"] > div,
-      [data-testid="stNumberInput"] input,
-      [data-testid="stTextInput"] input {
-
-          background: var(--bg-surface) !important;
-
-          color: var(--text-dark) !important;
-
-          border-color: var(--border) !important;
-
-          border-radius: 9px !important;
-      }
-
-
-      /* Input focus */
-
-      div[data-baseweb="input"]:focus-within,
-      div[data-baseweb="select"] > div:focus-within {
-
-          border-color: var(--cerulean) !important;
-
-          box-shadow:
-              0 0 0 1px rgba(28, 110, 140, 0.20);
-      }
-
-
-      /* Selectbox text */
-
-      div[data-baseweb="select"] * {
-          color: var(--text-dark) !important;
-      }
-
-
-      /* ==========================================================
-         SLIDER
-         ========================================================== */
-
-      [data-testid="stSlider"] {
-
-            background: #DCEBF0;
-        
-            padding: .55rem .75rem;
-        
-            border-radius: 12px;
-        }
-
-
-      /* ==========================================================
-         METRIC CARDS
-         ========================================================== */
-
-      div[data-testid="stMetric"] {
-
-          background: linear-gradient(
-              145deg,
-              #F8FCFD 0%,
-              #EAF3F6 100%
-          );
-
-          padding: 1rem;
-
-          border-radius: 14px;
-
-          border: 1px solid var(--border);
-
-          box-shadow:
-              0 7px 20px rgba(34, 88, 113, 0.08);
-      }
-
-
-      div[data-testid="stMetric"] label {
-
-          color: var(--cerulean) !important;
-
-          font-weight: 750;
-      }
-
-
-      div[data-testid="stMetricValue"] {
-
-          color: var(--text-dark) !important;
-
-          font-weight: 800;
-      }
-
-
-      /* ==========================================================
-         TABS
-         ========================================================== */
-
-      button[data-baseweb="tab"] {
-
-          color: var(--text-muted) !important;
-
-          font-weight: 750 !important;
-      }
-
-
-      button[data-baseweb="tab"][aria-selected="true"] {
-
-          color: var(--cerulean) !important;
-      }
-
-
-      div[data-baseweb="tab-highlight"] {
-
-          background: linear-gradient(
-              90deg,
-              #225871,
-              #1C6E8C
-          ) !important;
-      }
-
-
-      /* ==========================================================
-         ALERT / RESPONSIBLE USE
-         ========================================================== */
-
-      div[data-testid="stAlert"] {
-
-          background: linear-gradient(
-              135deg,
-              #EAF3F6 0%,
-              #E3EFF3 100%
-          );
-
-          border: 1px solid var(--border);
-
-          color: var(--text-dark);
-
-          border-radius: 13px;
-      }
-
-
-      /* ==========================================================
-         DIVIDERS
-         ========================================================== */
-
-      hr {
-          border-color: var(--border) !important;
-      }
-
-
-      /* ==========================================================
-         FORM CONTAINER
-         ========================================================== */
-
-      [data-testid="stForm"] {
-
-        background: linear-gradient(
-            135deg,
-            #EAF3F6 0%,
-            #DCEBF0 100%
-        );
-    
-        border: 1px solid #B9D3DC;
-    
-        border-radius: 18px;
-    
-        padding: 1.15rem;
-    
-        box-shadow:
-            0 10px 26px rgba(34, 88, 113, 0.10);
-    }
-
-
-      /* ==========================================================
-         SCROLLBAR
-         ========================================================== */
-
-      ::-webkit-scrollbar {
-          width: 8px;
-      }
-
-      ::-webkit-scrollbar-track {
-          background: #EAF3F6;
-      }
-
-      ::-webkit-scrollbar-thumb {
-          background: #8FB6C3;
-          border-radius: 10px;
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-          background: #1C6E8C;
-      }
-
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+    return html
 
 
 # ============================================================
@@ -738,41 +348,7 @@ if missing_dataset_columns:
 # HEADER
 # ============================================================
 
-st.html(
-    """
-    <div style="
-        background: linear-gradient(
-            120deg,
-            #225871 0%,
-            #1F637F 50%,
-            #1C6E8C 100%
-        );
-        border-radius: 18px;
-        padding: 2.25rem 2.5rem;
-        color: white;
-        margin-bottom: 1.5rem;
-    ">
-
-        <h1 style="
-            font-size: 2.15rem;
-            margin: 0 0 0.4rem 0;
-            color: white;
-        ">
-            HealthRisk Predictor
-        </h1>
-
-        <p style="
-            color: #D9E9EE;
-            font-size: 1.05rem;
-            margin: 0;
-        ">
-            Turn patient health indicators into a clear,
-            model-assisted risk signal.
-        </p>
-
-    </div>
-    """
-)
+st.html(load_html_template("header.html"))
 
 
 # ============================================================
@@ -1305,97 +881,21 @@ with predict_tab:
         
         with left:
         
-            result_html = f"""
-            <div style="
-                background: {result_bg};
-                border: 1px solid {result_border};
-                border-radius: 18px;
-                padding: 30px;
-                box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-                min-height: 235px;
-            ">
-        
-                <!-- Top label -->
-        
-                <div style="
-                    color: #64748b;
-                    font-size: 12px;
-                    font-weight: 800;
-                    letter-spacing: 0.12em;
-                    text-transform: uppercase;
-                    margin-bottom: 22px;
-                ">
-                    Prediction status
-                </div>
-        
-        
-                <!-- Main status -->
-        
-                <div style="
-                    display: flex;
-                    align-items: center;
-                    gap: 16px;
-                    margin-bottom: 18px;
-                ">
-        
-                    <div style="
-                        width: 54px;
-                        height: 54px;
-                        min-width: 54px;
-                        border-radius: 50%;
-                        background: {result_icon_bg};
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        color: {result_color};
-                        font-size: 27px;
-                        font-weight: 800;
-                    ">
-                        {result_icon}
-                    </div>
-        
-        
-                    <div>
-        
-                        <div style="
-                            color: {result_color};
-                            font-size: 27px;
-                            font-weight: 800;
-                            line-height: 1.15;
-                            margin-bottom: 5px;
-                        ">
-                            {result_label}
-                        </div>
-        
-                        <div style="
-                            color: #475569;
-                            font-size: 15px;
-                            font-weight: 600;
-                        ">
-                            {result_short_label}
-                        </div>
-        
-                    </div>
-        
-                </div>
-        
-        
-                <!-- Description -->
-        
-                <div style="
-                    color: #475569;
-                    font-size: 15px;
-                    line-height: 1.6;
-                ">
-                    {status_message}
-                </div>
-        
-            </div>
-            """
-        
-            st.html(
-                result_html
+            result_html = load_html_template(
+                "result_card.html",
+                {
+                    "result_bg": result_bg,
+                    "result_border": result_border,
+                    "result_icon_bg": result_icon_bg,
+                    "result_color": result_color,
+                    "result_icon": result_icon,
+                    "result_label": result_label,
+                    "result_short_label": result_short_label,
+                    "status_message": status_message,
+                },
             )
+
+            st.html(result_html)
         
         
         # ====================================================
@@ -1468,108 +968,18 @@ with predict_tab:
                 )
         
         
-            probability_html = f"""
-            <div style="
-                background: linear-gradient(
-                    145deg,
-                    #F8FCFD 0%,
-                    #EAF3F6 100%
-                );
-                border: 1px solid #B9D3DC;
-                border-radius: 18px;
-                padding: 30px;
-                box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-                min-height: 235px;
-            ">
-        
-                <div style="
-                    color: #0f172a;;
-                    font-size: 12px;
-                    font-weight: 800;
-                    letter-spacing: 0.12em;
-                    text-transform: uppercase;
-                    margin-bottom: 14px;
-                ">
-                    Estimated risk probability
-                </div>
-        
-        
-                <div style="
-                    display: flex;
-                    align-items: baseline;
-                    gap: 8px;
-                    margin-bottom: 8px;
-                ">
-        
-                    <span style="
-                        color: #225871;;
-                        font-size: 44px;
-                        font-weight: 800;
-                        line-height: 1;
-                    ">
-                        {probability_percent:.1f}%
-                    </span>
-        
-                    <span style="
-                        color: #64748b;
-                        font-size: 14px;
-                        font-weight: 600;
-                    ">
-                        Risk probability
-                    </span>
-        
-                </div>
-        
-        
-                <!-- Progress bar -->
-        
-                <div style="
-                    width: 100%;
-                    height: 10px;
-                    background: #e2e8f0;
-                    border-radius: 999px;
-                    overflow: hidden;
-                    margin-bottom: 14px;
-                ">
-        
-                    <div style="
-                        width: {probability_percent:.1f}%;
-                        height: 100%;
-                        background: {probability_color};
-                        border-radius: 999px;
-                    ">
-                    </div>
-        
-                </div>
-        
-        
-                <!-- Risk level -->
-        
-                <div style="
-                    display: flex;
-                    align-items: center;
-                ">
-        
-                    <span style="
-                        background: {probability_bg};
-                        color: {probability_color};
-                        border: 1px solid {probability_border};
-                        padding: 7px 13px;
-                        border-radius: 999px;
-                        font-size: 12px;
-                        font-weight: 800;
-                    ">
-                        {probability_label}
-                    </span>
-        
-                </div>
-        
-            </div>
-            """
-        
-            st.html(
-                probability_html
+            probability_html = load_html_template(
+                "probability_card.html",
+                {
+                    "probability_color": probability_color,
+                    "probability_bg": probability_bg,
+                    "probability_border": probability_border,
+                    "probability_percent": f"{probability_percent:.1f}",
+                    "probability_label": probability_label,
+                },
             )
+
+            st.html(probability_html)
         
         
         # ====================================================
@@ -1792,7 +1202,7 @@ with about_tab:
     st.write(
         "Smoking, Alcohol, Diet, MentalHealth, "
         "PhysicalActivity, MedicalHistory, and Allergies "
-        "use category codes 0, 1, and 2 in the application "
+        "use category codes 0 and 1 in the application "
         "to match the training data."
     )
 
@@ -1822,97 +1232,7 @@ with about_tab:
     )
 
 
-    st.html(
-        """
-        <div style="
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 18px 20px;
-            margin-top: 8px;
-        ">
-
-            <div style="
-                display: flex;
-                gap: 12px;
-                align-items: center;
-                margin-bottom: 12px;
-            ">
-
-                <div style="
-                    width: 38px;
-                    height: 38px;
-                    border-radius: 50%;
-                    background: #d1fae5;
-                    color: #047857;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-weight: 800;
-                ">
-                    0
-                </div>
-
-                <div>
-                    <div style="
-                        font-weight: 800;
-                        color: #047857;
-                    ">
-                        No Risk / Healthy
-                    </div>
-
-                    <div style="
-                        font-size: 13px;
-                        color: #64748b;
-                    ">
-                        Class 0
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div style="
-                display: flex;
-                gap: 12px;
-                align-items: center;
-            ">
-
-                <div style="
-                    width: 38px;
-                    height: 38px;
-                    border-radius: 50%;
-                    background: #fee2e2;
-                    color: #dc2626;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-weight: 800;
-                ">
-                    1
-                </div>
-
-                <div>
-                    <div style="
-                        font-weight: 800;
-                        color: #dc2626;
-                    ">
-                        Risk / Unhealthy
-                    </div>
-
-                    <div style="
-                        font-size: 13px;
-                        color: #64748b;
-                    ">
-                        Class 1
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-        """
-    )
+    st.html(load_html_template("target.html"))
 
 
     st.write(

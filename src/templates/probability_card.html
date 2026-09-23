@@ -1,0 +1,96 @@
+<div style="
+                background: linear-gradient(
+                    145deg,
+                    #F8FCFD 0%,
+                    #EAF3F6 100%
+                );
+                border: 1px solid #B9D3DC;
+                border-radius: 18px;
+                padding: 30px;
+                box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+                min-height: 235px;
+            ">
+        
+                <div style="
+                    color: #0f172a;;
+                    font-size: 12px;
+                    font-weight: 800;
+                    letter-spacing: 0.12em;
+                    text-transform: uppercase;
+                    margin-bottom: 14px;
+                ">
+                    Estimated risk probability
+                </div>
+        
+        
+                <div style="
+                    display: flex;
+                    align-items: baseline;
+                    gap: 8px;
+                    margin-bottom: 8px;
+                ">
+        
+                    <span style="
+                        color: #225871;;
+                        font-size: 44px;
+                        font-weight: 800;
+                        line-height: 1;
+                    ">
+                        {{probability_percent}}%
+                    </span>
+        
+                    <span style="
+                        color: #64748b;
+                        font-size: 14px;
+                        font-weight: 600;
+                    ">
+                        Risk probability
+                    </span>
+        
+                </div>
+        
+        
+                <!-- Progress bar -->
+        
+                <div style="
+                    width: 100%;
+                    height: 10px;
+                    background: #e2e8f0;
+                    border-radius: 999px;
+                    overflow: hidden;
+                    margin-bottom: 14px;
+                ">
+        
+                    <div style="
+                        width: {{probability_percent}}%;
+                        height: 100%;
+                        background: {{probability_color}};
+                        border-radius: 999px;
+                    ">
+                    </div>
+        
+                </div>
+        
+        
+                <!-- Risk level -->
+        
+                <div style="
+                    display: flex;
+                    align-items: center;
+                ">
+        
+                    <span style="
+                        background: {{probability_bg}};
+                        color: {{probability_color}};
+                        border: 1px solid {{probability_border}};
+                        padding: 7px 13px;
+                        border-radius: 999px;
+                        font-size: 12px;
+                        font-weight: 800;
+                    ">
+                        {{probability_label}}
+                    </span>
+        
+                </div>
+        
+            </div>

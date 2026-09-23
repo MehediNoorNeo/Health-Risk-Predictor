@@ -1,0 +1,421 @@
+/* ==========================================================
+         COLOR PALETTE
+         ========================================================== */
+
+      :root {
+          --cerulean: #1C6E8C;
+          --cerulean-dark: #1E6986;
+          --blue-slate: #1F637F;
+          --blue-slate-dark: #225871;
+
+          --bg-main: #F1F7F9;
+          --bg-surface: #F8FCFD;
+          --bg-soft: #EAF3F6;
+          --bg-soft-blue: #E3EFF3;
+
+          --border: #B9D3DC;
+          --border-dark: #8FB6C3;
+
+          --text-dark: #173746;
+          --text-main: #244957;
+          --text-muted: #66818D;
+
+          --success: #16805C;
+          --success-bg: #E8F6F0;
+
+          --danger: #C73E4D;
+          --danger-bg: #FCECEE;
+
+          --warning: #B77716;
+          --warning-bg: #FFF5DF;
+      }
+
+
+      /* ==========================================================
+         MAIN APPLICATION BACKGROUND
+         ========================================================== */
+
+      .stApp {
+          background:
+              radial-gradient(
+                  circle at 0% 0%,
+                  rgba(28, 110, 140, 0.10),
+                  transparent 30%
+              ),
+              radial-gradient(
+                  circle at 100% 0%,
+                  rgba(31, 99, 127, 0.08),
+                  transparent 28%
+              ),
+              linear-gradient(
+                  135deg,
+                  #F1F7F9 0%,
+                  #F5FAFB 50%,
+                  #EAF3F6 100%
+              );
+
+          color: var(--text-dark);
+      }
+
+
+      /* ==========================================================
+         MAIN CONTENT CONTAINER
+         ========================================================== */
+
+      .main .block-container {
+          background: rgba(248, 252, 253, 0.72);
+          border-radius: 22px;
+
+          padding-top: 1.7rem;
+          padding-bottom: 3rem;
+      }
+
+
+      /* ==========================================================
+         STREAMLIT TOP BAR
+         ========================================================== */
+
+      header[data-testid="stHeader"] {
+          background: linear-gradient(
+              90deg,
+              #225871 0%,
+              #1F637F 50%,
+              #1C6E8C 100%
+          );
+
+          box-shadow: 0 2px 12px rgba(34, 88, 113, 0.18);
+      }
+
+      header[data-testid="stHeader"] button {
+          color: white !important;
+      }
+
+
+      /* ==========================================================
+         SIDEBAR
+         ========================================================== */
+
+      [data-testid="stSidebar"] {
+          background: linear-gradient(
+              180deg,
+              #225871 0%,
+              #1F637F 55%,
+              #1E6986 100%
+          );
+
+          border-right: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      [data-testid="stSidebar"] * {
+          color: #EAF3F6;
+      }
+
+      [data-testid="stSidebar"] hr {
+          border-color: rgba(255, 255, 255, 0.18) !important;
+      }
+
+
+      /* ==========================================================
+         SECTION LABELS
+         ========================================================== */
+
+      .section-label {
+          color: var(--cerulean);
+          font-size: .76rem;
+          font-weight: 800;
+
+          letter-spacing: .12em;
+          text-transform: uppercase;
+
+          margin: .4rem 0;
+      }
+
+
+      /* ==========================================================
+         HEADINGS / NORMAL TEXT
+         ========================================================== */
+
+      h1, h2, h3, h4, h5, h6 {
+          color: var(--text-dark);
+      }
+
+      p, label {
+          color: var(--text-main);
+      }
+
+      [data-testid="stCaptionContainer"] {
+          color: var(--text-muted) !important;
+      }
+
+
+    /* ==========================================================
+       BUTTONS
+       ========================================================== */
+    
+    .stButton > button,
+    .stFormSubmitButton > button,
+    [data-testid="stFormSubmitButton"] button {
+    
+        background: linear-gradient(
+            135deg,
+            #1E6986 0%,
+            #1C6E8C 100%
+        ) !important;
+    
+        color: #FFFFFF !important;
+    
+        border: none !important;
+        border-radius: 10px !important;
+    
+        font-weight: 800 !important;
+    
+        padding: .65rem 1rem !important;
+    
+        width: 100% !important;
+    
+        box-shadow:
+            0 7px 18px rgba(28, 110, 140, 0.20);
+    
+        transition:
+            transform .15s ease,
+            box-shadow .15s ease,
+            background .15s ease;
+    }
+    
+    
+    /* Force button text to white */
+    
+    .stButton > button *,
+    .stFormSubmitButton > button *,
+    [data-testid="stFormSubmitButton"] button * {
+    
+        color: #FFFFFF !important;
+        fill: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+    }
+    
+    
+    /* Hover */
+    
+    .stButton > button:hover,
+    .stFormSubmitButton > button:hover,
+    [data-testid="stFormSubmitButton"] button:hover {
+    
+        background: linear-gradient(
+            135deg,
+            #1C6E8C 0%,
+            #225871 100%
+        ) !important;
+    
+        color: #FFFFFF !important;
+    
+        transform: translateY(-1px);
+    
+        box-shadow:
+            0 10px 22px rgba(28, 110, 140, 0.27);
+    }
+    
+    
+    /* Keep text white on hover too */
+    
+    .stButton > button:hover *,
+    .stFormSubmitButton > button:hover *,
+    [data-testid="stFormSubmitButton"] button:hover * {
+    
+        color: #FFFFFF !important;
+        fill: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+    }
+
+
+      /* ==========================================================
+         INPUT FIELDS
+         ========================================================== */
+
+      div[data-baseweb="input"],
+      div[data-baseweb="select"] > div,
+      [data-testid="stNumberInput"] input,
+      [data-testid="stTextInput"] input {
+
+          background: var(--bg-surface) !important;
+
+          color: var(--text-dark) !important;
+
+          border-color: var(--border) !important;
+
+          border-radius: 9px !important;
+      }
+
+
+      /* Input focus */
+
+      div[data-baseweb="input"]:focus-within,
+      div[data-baseweb="select"] > div:focus-within {
+
+          border-color: var(--cerulean) !important;
+
+          box-shadow:
+              0 0 0 1px rgba(28, 110, 140, 0.20);
+      }
+
+
+      /* Selectbox text */
+
+      div[data-baseweb="select"] * {
+          color: var(--text-dark) !important;
+      }
+
+
+      /* ==========================================================
+         SLIDER
+         ========================================================== */
+
+      [data-testid="stSlider"] {
+
+            background: #DCEBF0;
+        
+            padding: .55rem .75rem;
+        
+            border-radius: 12px;
+        }
+
+
+      /* ==========================================================
+         METRIC CARDS
+         ========================================================== */
+
+      div[data-testid="stMetric"] {
+
+          background: linear-gradient(
+              145deg,
+              #F8FCFD 0%,
+              #EAF3F6 100%
+          );
+
+          padding: 1rem;
+
+          border-radius: 14px;
+
+          border: 1px solid var(--border);
+
+          box-shadow:
+              0 7px 20px rgba(34, 88, 113, 0.08);
+      }
+
+
+      div[data-testid="stMetric"] label {
+
+          color: var(--cerulean) !important;
+
+          font-weight: 750;
+      }
+
+
+      div[data-testid="stMetricValue"] {
+
+          color: var(--text-dark) !important;
+
+          font-weight: 800;
+      }
+
+
+      /* ==========================================================
+         TABS
+         ========================================================== */
+
+      button[data-baseweb="tab"] {
+
+          color: var(--text-muted) !important;
+
+          font-weight: 750 !important;
+      }
+
+
+      button[data-baseweb="tab"][aria-selected="true"] {
+
+          color: var(--cerulean) !important;
+      }
+
+
+      div[data-baseweb="tab-highlight"] {
+
+          background: linear-gradient(
+              90deg,
+              #225871,
+              #1C6E8C
+          ) !important;
+      }
+
+
+      /* ==========================================================
+         ALERT / RESPONSIBLE USE
+         ========================================================== */
+
+      div[data-testid="stAlert"] {
+
+          background: linear-gradient(
+              135deg,
+              #EAF3F6 0%,
+              #E3EFF3 100%
+          );
+
+          border: 1px solid var(--border);
+
+          color: var(--text-dark);
+
+          border-radius: 13px;
+      }
+
+
+      /* ==========================================================
+         DIVIDERS
+         ========================================================== */
+
+      hr {
+          border-color: var(--border) !important;
+      }
+
+
+      /* ==========================================================
+         FORM CONTAINER
+         ========================================================== */
+
+      [data-testid="stForm"] {
+
+        background: linear-gradient(
+            135deg,
+            #EAF3F6 0%,
+            #DCEBF0 100%
+        );
+    
+        border: 1px solid #B9D3DC;
+    
+        border-radius: 18px;
+    
+        padding: 1.15rem;
+    
+        box-shadow:
+            0 10px 26px rgba(34, 88, 113, 0.10);
+    }
+
+
+      /* ==========================================================
+         SCROLLBAR
+         ========================================================== */
+
+      ::-webkit-scrollbar {
+          width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+          background: #EAF3F6;
+      }
+
+      ::-webkit-scrollbar-thumb {
+          background: #8FB6C3;
+          border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+          background: #1C6E8C;
+      }

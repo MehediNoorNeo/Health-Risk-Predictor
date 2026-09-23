@@ -1,0 +1,85 @@
+<div style="
+                background: {{result_bg}};
+                border: 1px solid {{result_border}};
+                border-radius: 18px;
+                padding: 30px;
+                box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+                min-height: 235px;
+            ">
+        
+                <!-- Top label -->
+        
+                <div style="
+                    color: #64748b;
+                    font-size: 12px;
+                    font-weight: 800;
+                    letter-spacing: 0.12em;
+                    text-transform: uppercase;
+                    margin-bottom: 22px;
+                ">
+                    Prediction status
+                </div>
+        
+        
+                <!-- Main status -->
+        
+                <div style="
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+                    margin-bottom: 18px;
+                ">
+        
+                    <div style="
+                        width: 54px;
+                        height: 54px;
+                        min-width: 54px;
+                        border-radius: 50%;
+                        background: {{result_icon_bg}};
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: {{result_color}};
+                        font-size: 27px;
+                        font-weight: 800;
+                    ">
+                        {{result_icon}}
+                    </div>
+        
+        
+                    <div>
+        
+                        <div style="
+                            color: {{result_color}};
+                            font-size: 27px;
+                            font-weight: 800;
+                            line-height: 1.15;
+                            margin-bottom: 5px;
+                        ">
+                            {{result_label}}
+                        </div>
+        
+                        <div style="
+                            color: #475569;
+                            font-size: 15px;
+                            font-weight: 600;
+                        ">
+                            {{result_short_label}}
+                        </div>
+        
+                    </div>
+        
+                </div>
+        
+        
+                <!-- Description -->
+        
+                <div style="
+                    color: #475569;
+                    font-size: 15px;
+                    line-height: 1.6;
+                ">
+                    {{status_message}}
+                </div>
+        
+            </div>
