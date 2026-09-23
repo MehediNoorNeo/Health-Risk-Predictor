@@ -4,7 +4,7 @@ A machine-learning web application that provides a model-assisted health-risk as
 
 ## Live Application
 
-[Open HealthRisk Predictor](https://health-risk-predictorgit-787egqw4krjvbqykztighu.streamlit.app/)
+[Open HealthRisk Predictor](https://mvcl6xc9seppdn78uebg4q.streamlit.app/)
 
 ## GitHub Repository
 
