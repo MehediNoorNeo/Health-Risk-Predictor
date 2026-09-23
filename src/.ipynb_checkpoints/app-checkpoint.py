@@ -10,6 +10,7 @@ import streamlit as st
 # ============================================================
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATA_PATH = PROJECT_DIR / "data" / "novagen_dataset.csv"
 MODEL_PATH = PROJECT_DIR / "models" / "stacking_pipeline.pkl"
