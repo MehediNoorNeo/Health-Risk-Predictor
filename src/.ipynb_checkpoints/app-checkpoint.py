@@ -21,7 +21,7 @@ MODEL_PATH = PROJECT_DIR / "models" / "stacking_pipeline.pkl"
 
 st.set_page_config(
     page_title="HealthRisk Predictor",
-    page_icon="♥",
+    page_icon="../figures/public_health_icon.png",
     layout="wide",
     initial_sidebar_state="expanded",
 )
