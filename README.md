@@ -1,10 +1,15 @@
 # HealthRisk Predictor
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://mvcl6xc9seppdn78uebg4q.streamlit.app/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-Stacking%20Ensemble-F7931E?logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
+
 A machine-learning web application that provides a model-assisted health-risk assessment from clinical, lifestyle, and health-profile indicators.
 
 ## Live Application
 
-[Open HealthRisk Predictor](https://mvcl6xc9seppdn78uebg4q.streamlit.app/)
+🚀 **Live Streamlit App:** [https://mvcl6xc9seppdn78uebg4q.streamlit.app/](https://mvcl6xc9seppdn78uebg4q.streamlit.app/)
 
 ## GitHub Repository
 
@@ -285,6 +290,7 @@ Health-Risk-Predictor/
 ├── src/
 │   └── app.py
 │
+├── LICENSE
 └── requirements.txt
 ```
 
@@ -462,4 +468,4 @@ GitHub: [@MehediNoorNeo](https://github.com/MehediNoorNeo)
 
 ## License
 
-No license file is currently included in the repository. Add an appropriate license before distributing the project as open-source software.
+This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)** - see the [LICENSE](LICENSE) file for details.
